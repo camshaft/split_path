@@ -10,6 +10,8 @@ dep_jxa-split-binary = https://github.com/mndvns/jxa-split-binary.git
 JXA_SRC = $(wildcard src/*.jxa)
 JXA_OUT = $(patsubst src/%.jxa, ebin/%.beam, $(JXA_SRC))
 
+ROOT = $(realpath $(dir $(firstword $(MAKEFILE_LIST))))
+
 all: deps app bin/joxa $(JXA_OUT)
 
 include erlang.mk
@@ -23,4 +25,4 @@ bin/joxa:
 	@chmod +x $@
 
 ebin/%.beam: src/%.jxa
-	@ERL_LIBS=deps ./bin/joxa -o ebin -c $<
+	@ERL_LIBS=$(ROOT)/deps:$(ERL_LIBS) ./bin/joxa -o ebin -c $<
