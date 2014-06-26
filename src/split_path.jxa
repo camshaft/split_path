@@ -1,0 +1,13 @@
+(ns split_path
+  (require cow_qs)
+  (require (joxa-lists :as jlists))
+  (require jxa-split-binary))
+
+(jxa-split-binary/defsplit _split \/ 2000)
+
+(defn+ split (str)
+  (case str
+    (<<(\/ :size 8) (rest :binary)>>
+     (jlists/map (s (_split str))
+                 (cow_qs/urldecode s)))
+    (_ :badpath)))
