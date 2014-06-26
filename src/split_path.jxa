@@ -8,6 +8,6 @@
 (defn+ split (str)
   (case str
     (<<(\/ :size 8) (rest :binary)>>
-     (jlists/map (s (_split str))
+     (jlists/map (s (_split rest))
                  (cow_qs/urldecode s)))
     (_ :badpath)))
